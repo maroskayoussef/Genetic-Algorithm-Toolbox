@@ -49,6 +49,15 @@ class CVRPChromosome(IntegerChromosome):
         self.genes = self.values[:]
         random.shuffle(self.genes)
 
+    def __deepcopy__(self, memo):
+        # Called by copy.deepcopy (used in crossover and mutation).
+        # Copy only the genes; share the problem and values, which never
+        # change. This avoids copying the whole distance matrix every time.
+        new = self.__class__.__new__(self.__class__)
+        new.__dict__.update(self.__dict__)
+        new.genes = list(self.genes)
+        return new
+
 
 def decode(genes, problem):
     # Turn the gene list into a list of routes (one list per vehicle).

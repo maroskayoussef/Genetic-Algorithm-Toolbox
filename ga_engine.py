@@ -37,6 +37,8 @@ class GeneticAlgorithm:
 
             # calculate fitness
             raw_fitness = self.config.fitness_function.evaluate(individual)
+            if self.config.objective == "minimize":
+                raw_fitness = -raw_fitness
 
             # handle infeasible solutions
             if not individual.is_feasible:
@@ -48,6 +50,8 @@ class GeneticAlgorithm:
                     new_chromosome.initialize()
                     individual.chromosome = new_chromosome
                     individual.fitness = self.config.fitness_function.evaluate(individual)
+                    if self.config.objective == "minimize":
+                        individual.fitness = -individual.fitness
             else:
                 individual.fitness = raw_fitness
 
@@ -59,6 +63,10 @@ class GeneticAlgorithm:
         if (self.best_individual is None or
                 current_best.fitness > self.best_individual.fitness):
             self.best_individual = current_best
+
+    def _display(self, fitness):
+        # undo the flip so printed values are in the problem's real units
+        return -fitness if self.config.objective == "minimize" else fitness
 
     # ─────────────────────────────────────────
     # Main Run Loop
@@ -107,10 +115,11 @@ class GeneticAlgorithm:
 
             # print progress every 100 generations
             if generation % 100 == 0:
-                print(f"Generation {generation} | Best Fitness: {self.best_individual.fitness}")
+                print(f"Generation {generation} | Best Fitness: "
+                  f"{self._display(self.best_individual.fitness)}")
 
         print(f"\nDone! Best solution found:")
         print(f"  Genes:   {self.best_individual.chromosome}")
-        print(f"  Fitness: {self.best_individual.fitness}")
+        print(f"  Fitness: {self._display(self.best_individual.fitness)}")
 
         return self.best_individual

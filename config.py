@@ -21,6 +21,9 @@ class GAConfig:
         self.mutation_method     = None   # MutationMethod    — must be set
         self.replacement_method  = None   # ReplacementMethod — must be set
 
+        # ── Objective ───────────────────────────────
+        self.objective = "maximize"       # "maximize" or "minimize" a feasible solution's fitness. If "minimize", the fitness function is negated before selection.
+
         # ── Infeasibility Handling ──────────────────
         self.infeasibility_strategy = "penalty"   # "penalty" or "reject"
         self.penalty_weight         = 1000        # used if strategy = "penalty"
@@ -33,6 +36,8 @@ class GAConfig:
             errors.append("fitness_function is not set")
         if self.feasibility_check is None:
             errors.append("feasibility_check is not set")
+        if self.objective not in ("maximize", "minimize"):
+            errors.append("objective must be 'maximize' or 'minimize'")
         if self.selection_method is None:
             errors.append("selection_method is not set")
         if self.crossover_method is None:
@@ -42,6 +47,7 @@ class GAConfig:
         if self.replacement_method is None:
             errors.append("replacement_method is not set")
 
+
         if errors:
             raise ValueError("GAConfig is missing:\n" + "\n".join(errors))
 
@@ -49,6 +55,7 @@ class GAConfig:
         return (f"GAConfig(\n"
                 f"  population_size={self.population_size},\n"
                 f"  max_generations={self.max_generations},\n"
+                f"  objective={self.objective},\n"
                 f"  crossover_rate={self.crossover_rate},\n"
                 f"  mutation_rate={self.mutation_rate},\n"
                 f"  infeasibility_strategy={self.infeasibility_strategy},\n"
