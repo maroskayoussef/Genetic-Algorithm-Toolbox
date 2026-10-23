@@ -14,10 +14,8 @@ from cvrp_solution import print_solution
 
 
 def build_config(problem, population_size=100, max_generations=1000,
-                 crossover_rate=0.9, mutation_rate=0.6, tournament_size=3,
-                 elitism=2, replacement=None, overload_penalty=1000):
-    """Create a GAConfig for CVRP. Every argument has a default value,
-    and the caller can change any of them."""
+                 crossover_rate=0.9, mutation_rate=0.7, tournament_size=3,
+                 elitism=10, replacement=None, overload_penalty=1000):
     config = GAConfig()
 
     # hyperparameters
@@ -45,7 +43,7 @@ def build_config(problem, population_size=100, max_generations=1000,
 
 
 def solve(problem, seed=None, **settings):
-    """Run the GA once and return (routes, best_individual)."""
+    #Run the GA once and return (routes, best_individual)
     if seed is not None:
         random.seed(seed)                            # same seed = same result
     config = build_config(problem, **settings)
@@ -57,6 +55,6 @@ def solve(problem, seed=None, **settings):
 
 if __name__ == "__main__":
     problem = example_problem()
-    routes, best = solve(problem, seed=42)
+    routes, best = solve(problem, seed=0)
     print()
     print_solution(problem, routes, best.is_feasible)

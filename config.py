@@ -7,13 +7,13 @@ class GAConfig:
 
     def __init__(self):
 
-        # ── Population & Evolution ──────────────────
+        # Population & Evolution 
         self.population_size   = 50       # N
         self.max_generations   = 1000     # how many generations to run
         self.crossover_rate    = 0.7      # Pc
         self.mutation_rate     = 0.05     # Pm
 
-        # ── Pluggable Methods ───────────────────────
+        #  Pluggable Methods 
         self.fitness_function    = None   # FitnessFunction   — must be set
         self.feasibility_check   = None   # FeasibilityCheck  — must be set
         self.selection_method    = None   # SelectionMethod   — must be set
@@ -21,10 +21,9 @@ class GAConfig:
         self.mutation_method     = None   # MutationMethod    — must be set
         self.replacement_method  = None   # ReplacementMethod — must be set
 
-        # ── Objective ───────────────────────────────
         self.objective = "maximize"       # "maximize" or "minimize" a feasible solution's fitness. If "minimize", the fitness function is negated before selection.
 
-        # ── Infeasibility Handling ──────────────────
+        #  Infeasibility Handling 
         self.infeasibility_strategy = "penalty"   # "penalty" or "reject"
         self.penalty_weight         = 1000        # used if strategy = "penalty"
 

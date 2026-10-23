@@ -1,9 +1,5 @@
 from abc import ABC, abstractmethod
 
-
-# ─────────────────────────────────────────
-# Fitness Function — Member 5 implements this for CVRP
-# ─────────────────────────────────────────
 class FitnessFunction(ABC):
 
     @abstractmethod
@@ -12,10 +8,6 @@ class FitnessFunction(ABC):
         # Higher score = better solution.
         pass
 
-
-# ─────────────────────────────────────────
-# Feasibility Check — Member 4 implements this for CVRP
-# ─────────────────────────────────────────
 class FeasibilityCheck(ABC):
 
     @abstractmethod
